@@ -14,29 +14,28 @@ const loginBot = async (page, emailOrUsername, password, cookiesFileName) => {
   }
 
   await page.waitForTimeout(3000);
-  await page.goto("https://www.instagram.com/");
-
-  //await page.waitForNavigation({ waitUntil: "domcontentloaded" });
+  await page.goto("https://www.facebook.com/", { waitUntil: "load" });
 
   try {
-    await page.waitForSelector("input[name='username']", { timeout: 5000 });
-
-    await page.type("input[name='username']", emailOrUsername, {
+    await page.waitForSelector("input[name='email']");
+    await page.type("input[name='email']", emailOrUsername, {
       delay: 150,
     });
 
-    await page.type("input[name='password']", password, {
+    await page.type("input[name='pass']", password, {
       delay: 150,
     });
-    await page.click("#loginForm button[type='submit']");
+
+    await page.click("div._6ltg button[name='login']");
   } catch (err) {}
+
+  await page.waitForTimeout(5000);
 
   const cookies = await page.cookies();
   await promises.writeFile(
     "./" + cookiesFileName + ".json",
     JSON.stringify(cookies, null, 2)
   );
-  await page.waitForTimeout(5000);
 };
 
 export default loginBot;
