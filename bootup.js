@@ -6,13 +6,22 @@ const accounts = [
   {
     manualMode: false,
     testMode: false,
-    email: "tahir.ayoub.dev@gmail.com",
-    password: "khadija0617760248A",
+    email: "",
+    password: "",
     cookiesFileName: "cookies",
     linksToExtarct: [
-      "https://web.facebook.com/groups/673975246352169/search/?q=email",
+      {
+        link: "https://web.facebook.com/groups/1911869615745884/search/?q=%40gmail",
+        name: "DigitalPlannerAddicts",
+        startFrom: 20,
+        activatePostition: true,
+      },
+      /*{
+        link: "https://web.facebook.com/groups/532128707368667/search/?q=%40gmail",
+        name: "bullet journal",
+      },*/
     ],
-    numberOfPostsToExtract: 20,
+    numberOfPostsToExtract: 1000,
   },
 ];
 

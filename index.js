@@ -26,17 +26,13 @@ const facebookBot = async (account, puppeteerExtra) => {
 
   for (let i = 0; i < account.linksToExtarct.length; i++) {
     //Extract Emails from the giving link
-    const cleanEmailsList = await extractEmails(
+    await extractEmails(
       page,
       account.linksToExtarct[i],
       account.numberOfPostsToExtract
     );
 
     //await promises.writeFile("./cleanEmailsList.txt", cleanEmailsList);
-    await promises.writeFile(
-      "./cleanEmailsList" + i + ".json",
-      JSON.stringify(cleanEmailsList, null, 2)
-    );
   }
 
   console.log("finished!!!");

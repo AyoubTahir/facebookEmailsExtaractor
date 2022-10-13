@@ -17,7 +17,7 @@ const loginBot = async (page, emailOrUsername, password, cookiesFileName) => {
   await page.goto("https://www.facebook.com/", { waitUntil: "load" });
 
   try {
-    await page.waitForSelector("input[name='email']");
+    await page.waitForSelector("input[name='email']", { timeout: 5000 });
     await page.type("input[name='email']", emailOrUsername, {
       delay: 150,
     });
