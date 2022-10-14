@@ -174,7 +174,7 @@ const extractEmails = async (page, linkToExtarct, numberOfPostsToExtract) => {
       linkToExtarct.name +
       " group and " +
       emails.length +
-      "emails found "
+      " emails found "
   );
 };
 
