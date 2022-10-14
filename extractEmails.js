@@ -1,12 +1,6 @@
 import { promises } from "fs";
 
-const extractEmails = async (
-  page,
-  linkToExtarct,
-  numberOfPostsToExtract,
-  startFrom,
-  activatePostition
-) => {
+const extractEmails = async (page, linkToExtarct, numberOfPostsToExtract) => {
   await page.goto(linkToExtarct.link, { waitUntil: "load" });
 
   await page.waitForTimeout(5000);
@@ -46,6 +40,35 @@ const extractEmails = async (
             selector +
               " div.x6s0dn4.x78zum5.x2lah0s.x17rw0jw div.xnfveip span span"
           );
+
+          try {
+            //click to see all comments
+            await page.waitForSelector(
+              selector +
+                " div.x6s0dn4.x78zum5.xdj266r.x11i5rnm.xat24cr.x1mh8g0r.xe0p6wg div.x9f619.x1n2onr6.x1ja2u2z.xt0psk2.xuxw1ft",
+              { timeout: 3000 }
+            );
+            await page.evaluate((sel) => {
+              var scrollDiv = document.querySelector(sel).offsetTop;
+              window.scrollTo({ top: scrollDiv + 500, behavior: "smooth" });
+            }, selector);
+            await page.waitForTimeout(2000);
+            await page.click(
+              selector +
+                " div.x6s0dn4.x78zum5.xdj266r.x11i5rnm.xat24cr.x1mh8g0r.xe0p6wg div.x9f619.x1n2onr6.x1ja2u2z.xt0psk2.xuxw1ft"
+            );
+
+            //click all comments
+            await page.waitForSelector(
+              "div.x1n2onr6.x1fayt1i.xcxhlts div.x78zum5.xdt5ytf.x1iyjqo2.x1n2onr6 :nth-child(1) > :nth-child(3)",
+              { timeout: 3000 }
+            );
+            await page.waitForTimeout(2000);
+            await page.click(
+              "div.x1n2onr6.x1fayt1i.xcxhlts div.x78zum5.xdt5ytf.x1iyjqo2.x1n2onr6 :nth-child(1) > :nth-child(3)"
+            );
+          } catch (er) {}
+
           j++;
 
           let morecomment = true;
@@ -123,8 +146,8 @@ const extractEmails = async (
             oldNumberOfEmailsExtarcted = emails.length;
 
             await promises.writeFile(
-              "./" + linkToExtarct.name + ".json",
-              JSON.stringify(emails, null, 2)
+              "./" + linkToExtarct.name + ".txt",
+              emails.map((email) => email + "\n")
             );
           } else {
             console.log("0 emails found in post number " + i);
@@ -146,9 +169,13 @@ const extractEmails = async (
     }
   }
 
-  return emails;
-
-  //return await scrapeInfiniteScrollItems(page, numberOfPostsToExtract);
+  console.log(
+    "-->finished extracting " +
+      linkToExtarct.name +
+      " group and " +
+      emails.length +
+      "emails found "
+  );
 };
 
 const infiniteScrollItems = async (page, selector) => {

@@ -11,15 +11,11 @@ const accounts = [
     cookiesFileName: "cookies",
     linksToExtarct: [
       {
-        link: "https://web.facebook.com/groups/1911869615745884/search/?q=%40gmail",
-        name: "DigitalPlannerAddicts",
-        startFrom: 20,
-        activatePostition: true,
+        link: "group search link here",
+        name: "group name here",
+        startFrom: 1,
+        activatePostition: false,
       },
-      /*{
-        link: "https://web.facebook.com/groups/532128707368667/search/?q=%40gmail",
-        name: "bullet journal",
-      },*/
     ],
     numberOfPostsToExtract: 1000,
   },
